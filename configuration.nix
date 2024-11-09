@@ -1,204 +1,21 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./configs/nvidia.nix
     ];
 
-  # ====================
-  # User
-  # ====================
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.ryan = {
-    isNormalUser = true;
-    description = "ryan";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-	    unzip
-    	git
-    	dotnet-sdk
-	    go
-	    rustup
-    	brave
-    	firefox
-    	kate
-    	neovim
-    	vscodium
-	    obs-studio
-    	krita
-    	discord
-    	spotify
-    	spectacle
-    ];
-  };
-
-  # Enable automatic login for the user.
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "ryan";
-
-  # ====================
-  # System Packages
-  # ====================
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    neovim
-    wget
-    ntfs3g
-    exfat
-    gcc
-    ncurses
-    gnumake
-    direnv
-    steam
-    steam-run
-    protontricks
-    # support both 32- and 64-bit applications
-    wineWowPackages.stable
-    # support 32-bit only
-    wine
-    # support 64-bit only
-    (wine.override { wineBuild = "wine64"; })
-    # wine-staging (version with experimental features)
-    wineWowPackages.staging
-    # winetricks (all versions)
-    winetricks
-    # native wayland support (unstable)
-    wineWowPackages.waylandFull
-    lutris
-    (lutris.override {
-        extraLibraries =  pkgs: [
-          # List library dependencies here
-        ];
-         extraPkgs = pkgs: [
-           # List package dependencies here
-         ];
-      })
-  ];
-
-  # ====================
-  # Games
-  # ====================
-
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-  };
-
-  # ====================
-  # Display
-  # ====================
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the KDE Plasma Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-
-  # Configure keymap in X11
-  services.xserver = {
-    layout = "us";
-    xkbVariant = "";
-  };
-
-  # enable sway window manager
-  programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
-  };
-
-  # ====================
-  # Nvidia
-  # ====================
-
-  # nvidia setup
-  # Make sure opengl is enabled
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
-  # Tell Xorg to use the nvidia driver
-  services.xserver.videoDrivers = ["nvidia"];
-  hardware.nvidia = {
-    # Modesetting is needed for most wayland compositors
-    modesetting.enable = true;
-    # Use the open source version of the kernel module
-    # Only available on driver 515.43.04+
-    open = true;
-    # Enable the nvidia settings menu
-    nvidiaSettings = true;
-    # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
-
-  # ====================
-  # Fonts
-  # ====================
-
-  fonts.fonts = with pkgs; [
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    liberation_ttf
-    fira-code
-    fira-code-symbols
-    mplus-outline-fonts.githubRelease
-    dina-font
-    proggyfonts
-    source-code-pro
-    roboto
-    roboto-mono
-  ]; 
-
-  # ====================
-  # Sound
-  # ====================
-
-  # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = false;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  # ====================
-  # Bootloader
-  # ====================
-
+  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # ====================
-  # Networking
-  # ====================
-
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "ryan-nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -207,17 +24,10 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
-  networking.nameservers = ["94.140.14.140" "94.140.14.141"];
-
-  # ====================
-  # System
-  # ====================
 
   # Set your time zone.
-  time.timeZone = "America/Los_Angeles";
 
-  # Use local time to keep windows and nixos in sync
-  time.hardwareClockInLocalTime = true;
+  time.timeZone = "America/Los_Angeles";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -234,12 +44,172 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # ====================
-  # Printing
-  # ====================
+  # Enable the X11 windowing system.
+  services.xserver.enable = true;
+
+  # Enable the GNOME Desktop Environment.
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+
+  # Configure keymap in X11
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+
+  # Because the Windows install is clown shoes
+  # services.localtimed.enable = true;
+
+  # Enable sound with pipewire.
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
+
+    # use the example session manager (no others are packaged yet so this is enabled by default,
+    # no need to redefine it in your config for now)
+    #media-session.enable = true;
+  };
+
+  # Enable touchpad support (enabled default in most desktopManager).
+  # services.xserver.libinput.enable = true;
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.ryan = {
+    isNormalUser = true;
+    description = "ryan";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [
+      #  thunderbird
+    ];
+  };
+
+  # Install firefox.
+  programs.firefox.enable = true;
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
+  # Enable OpenGL
+  hardware.opengl = {
+    enable = true;
+  };
+
+  # Load nvidia driver for Xorg and Wayland
+  services.xserver.videoDrivers = [ "nvidia" ];
+
+  hardware.nvidia = {
+
+    # Modesetting is required.
+    modesetting.enable = true;
+
+    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
+    # Enable this if you have graphical corruption issues or application crashes after waking
+    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
+    # of just the bare essentials.
+    powerManagement.enable = false;
+
+
+    # Fine-grained power management. Turns off GPU when not in use.
+    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
+    powerManagement.finegrained = false;
+
+    # Use the NVidia open source kernel module (not to be confused with the
+    # independent third-party "nouveau" open source driver).
+    # Support is limited to the Turing and later architectures. Full list of 
+    # supported GPUs is at: 
+    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
+    # Only available from driver 515.43.04+
+    # Currently alpha-quality/buggy, so false is currently the recommended setting.
+    open = false;
+
+    # Enable the Nvidia settings menu,
+    # accessible via `nvidia-settings`.
+    nvidiaSettings = true;
+
+    # Optionally, you may need to select the appropriate driver version for your specific GPU.
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.systemPackages = with pkgs; [
+    # so vscode will format nix files
+    nixpkgs-fmt
+    gnome.gnome-tweaks
+    blackbox-terminal
+    footswitch
+    unzip
+    git
+    spectacle
+    livebook
+    neovim
+    vscodium
+    krita
+    discord
+    betterdiscordctl
+    steam
+    grim # screenshot functionality
+    slurp # screenshot functionality
+    wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
+    mako # notification system developed by swaywm maintainer
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
+
+    # elixir stuff
+    elixir
+    elixir-ls
+
+    # zig stuff
+    zig
+  ];
+
+  programs.steam.enable = true;
+
+  services.gnome.gnome-keyring.enable = true;
+
+  # enable sway window manager
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+  };
+
+  fonts = {
+    enableDefaultPackages = true;
+    packages = with pkgs; [
+      dejavu_fonts
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      liberation_ttf
+      fira-code
+      fira-code-symbols
+      mplus-outline-fonts.githubRelease
+      dina-font
+      proggyfonts
+      roboto
+      roboto-mono
+      source-code-pro
+      tamsyn
+      vistafonts
+    ];
+
+    fontconfig = {
+      defaultFonts = {
+        sansSerif = [ "Fira Code" ];
+      };
+    };
+
+  };
+
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -266,5 +236,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
+  system.stateVersion = "24.05"; # Did you read the comment?
 }
