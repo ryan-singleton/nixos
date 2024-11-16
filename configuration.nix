@@ -7,13 +7,22 @@
   imports =
     [
       # Include the results of the hardware scan.
+      <home-manager/nixos> 
       ./hardware-configuration.nix
-      ./configs/nvidia.nix
     ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+      kernelParams = [
+        # Nvidia framebuffer.
+        "nvidia-drm.fbdev=1"
+      ];
+    };
+
+
+  hardware.enableRedistributableFirmware = true;
 
   networking.hostName = "ryan-nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -92,6 +101,16 @@
     ];
   };
 
+  home-manager.users.ryan = { pkgs, ... }: {
+  home.packages = [ pkgs.atool pkgs.httpie ];
+  programs.bash.enable = true;
+
+  # The state version is required and should stay at the version you
+  # originally installed.
+  home.stateVersion = "24.05";
+};
+nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Install firefox.
   programs.firefox.enable = true;
 
@@ -115,7 +134,7 @@
     # Enable this if you have graphical corruption issues or application crashes after waking
     # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
     # of just the bare essentials.
-    powerManagement.enable = false;
+    powerManagement.enable = true;
 
 
     # Fine-grained power management. Turns off GPU when not in use.
@@ -142,50 +161,57 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    # so vscode will format nix files
-    nixpkgs-fmt
-    gnome.gnome-tweaks
-    blackbox-terminal
-    footswitch
+    home-manager
     unzip
     git
+    neofetch
     spectacle
-    livebook
     neovim
-    vscodium
-    krita
+    steam
+    lutris
+    bottles
+    wget
     discord
     betterdiscordctl
-    steam
+
+    # wayland compositor requirements
+
+    #sway    
     grim # screenshot functionality
-    slurp # screenshot functionality
-    wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
-    mako # notification system developed by swaywm maintainer
-    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    #  wget
+    slurp # screenshot functionalit
+    # mako # notification system
 
-    # elixir stuff
-    elixir
-    elixir-ls
-
-    # zig stuff
-    zig
+    #hyprland
+    kitty # hyprland really relies on this, remove if not a fan and not using hyprland
+    swaynotificationcenter
+    waybar
+    hyprpaper
+    hyprlock
+    hypridle
+    hyprshot
+    wofi
+    xdg-desktop-portal-hyprland
+    xdg-desktop-portal-gtk
   ];
 
   programs.steam.enable = true;
 
   services.gnome.gnome-keyring.enable = true;
 
+  # enable hyprland window manager
+  programs.hyprland.enable = true;
+
   # enable sway window manager
-  programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
-  };
+  #programs.sway = {
+  #  enable = true;
+  #  wrapperFeatures.gtk = true;
+  #};
 
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
       dejavu_fonts
+      font-awesome
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
