@@ -8,6 +8,7 @@
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./main-user.nix
+    ../modules/nvidia.nix
     inputs.home-manager.nixosModules.nixos
   ];
 
@@ -77,7 +78,7 @@
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
     users = {
-      "ryan" = import ./home.nix
+      "ryan" = import ./home.nix;
     };
   };
 
