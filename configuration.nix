@@ -5,198 +5,52 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-
-  # ====================
-  # User
-  # ====================
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.ryan = {
-    isNormalUser = true;
-    description = "ryan";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-	    unzip
-    	git
-    	dotnet-sdk
-	    go
-	    rustup
-    	brave
-    	firefox
-    	kate
-    	neovim
-    	vscodium
-	    obs-studio
-    	krita
-    	discord
-    	spotify
-    	spectacle
-    ];
-  };
-
-  # Enable automatic login for the user.
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "ryan";
-
-  # ====================
-  # System Packages
-  # ====================
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    neovim
-    wget
-    ntfs3g
-    exfat
-    gcc
-    ncurses
-    gnumake
-    direnv
-    steam
-    steam-run
-    protontricks
-    # support both 32- and 64-bit applications
-    wineWowPackages.stable
-    # support 32-bit only
-    wine
-    # support 64-bit only
-    (wine.override { wineBuild = "wine64"; })
-    # wine-staging (version with experimental features)
-    wineWowPackages.staging
-    # winetricks (all versions)
-    winetricks
-    # native wayland support (unstable)
-    wineWowPackages.waylandFull
-    lutris
-    (lutris.override {
-        extraLibraries =  pkgs: [
-          # List library dependencies here
-        ];
-         extraPkgs = pkgs: [
-           # List package dependencies here
-         ];
-      })
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
   ];
 
-  # ====================
-  # Games
-  # ====================
+  # Bootloader.
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+  };
+  boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelModules = [ "fuse" "kvm-intel" ];
 
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 10;
+    "kernel.sched_schedstats" = 0;
+    "kernel.nmi_watchdog" = 0;
   };
 
-  # ====================
-  # Display
-  # ====================
+  # further attempts to disable watchdog which keeps holding up restart
+  boot.kernelParams = [ "nowatchdog" ];
+  services.watchdogd.enable = false;
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  boot.blacklistedKernelModules = [
+    "iTCO_wdt"
+    "sp5100_tco"
+    "softdog"
+    "nmi_watchdog"
+    "watchdog"
+    "watchdog_core"
+  ];
 
-  # Enable the KDE Plasma Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  systemd.extraConfig = ''
+    DefaultTimeoutStopSec=10s
+  '';
 
-  # Configure keymap in X11
-  services.xserver = {
-    layout = "us";
-    xkbVariant = "";
-  };
+  systemd.user.extraConfig = ''
+    ExitOnSessionEnd=yes
+  '';
 
-  # enable sway window manager
-  programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
-  };
+  # swap file
+  swapDevices = [{
+    device = "/swapfile";
+    size = 16 * 1024; # 16GB
+  }];
 
-  # ====================
-  # Nvidia
-  # ====================
-
-  # nvidia setup
-  # Make sure opengl is enabled
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
-  # Tell Xorg to use the nvidia driver
-  services.xserver.videoDrivers = ["nvidia"];
-  hardware.nvidia = {
-    # Modesetting is needed for most wayland compositors
-    modesetting.enable = true;
-    # Use the open source version of the kernel module
-    # Only available on driver 515.43.04+
-    open = true;
-    # Enable the nvidia settings menu
-    nvidiaSettings = true;
-    # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
-
-  # ====================
-  # Fonts
-  # ====================
-
-  fonts.fonts = with pkgs; [
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    liberation_ttf
-    fira-code
-    fira-code-symbols
-    mplus-outline-fonts.githubRelease
-    dina-font
-    proggyfonts
-    source-code-pro
-    roboto
-    roboto-mono
-  ]; 
-
-  # ====================
-  # Sound
-  # ====================
-
-  # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = false;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  # ====================
-  # Bootloader
-  # ====================
-
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  # ====================
-  # Networking
-  # ====================
+  powerManagement.cpuFreqGovernor = "performance";
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -207,17 +61,8 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
-  networking.nameservers = ["94.140.14.140" "94.140.14.141"];
-
-  # ====================
-  # System
-  # ====================
-
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
-
-  # Use local time to keep windows and nixos in sync
-  time.hardwareClockInLocalTime = true;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -234,12 +79,112 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # ====================
-  # Printing
-  # ====================
+  # Enable the X11 windowing system.
+  # You can disable this if you're only using the Wayland session.
+  services.xserver = {
+    enable = true;
+    videoDrivers = [ "nvidia" ];
+    xkb = {
+      layout = "us";
+      variant = "";
+    };
+  };
+
+  # nvidia
+  hardware.nvidia = {
+    open = true;
+    modesetting.enable = true;
+    powerManagement.enable = true;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+  hardware.graphics.enable = true;
+  hardware.cpu.intel.updateMicrocode = true;
+
+  # Enable the KDE Plasma Desktop Environment.
+  services.desktopManager.plasma6.enable = true;
+  services.displayManager.sddm.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+
+  # Enable sound with pipewire.
+  services.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
+
+    # use the example session manager (no others are packaged yet so this is enabled by default,
+    # no need to redefine it in your config for now)
+    #media-session.enable = true;
+  };
+
+  # Enable touchpad support (enabled default in most desktopManager).
+  # services.xserver.libinput.enable = true;
+
+  users.users.ryan = {
+    isNormalUser = true;
+    description = "ryan";
+    extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.fish;
+    packages = with pkgs; [
+      fish
+      oh-my-fish
+      vscodium
+      nixfmt-classic
+      krita
+      gimp
+      inkscape
+      obs-studio
+      vlc
+      discord
+    ];
+  };
+
+  # Install firefox.
+  programs.firefox.enable = true;
+
+  # Install steam
+  programs.steam.enable = true;
+  programs.gamemode.enable = true;
+  programs.gamescope.enable = true;
+  programs.steam.gamescopeSession.enable = true;
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
+  # flatpak
+  services.flatpak.enable = true;
+
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.systemPackages = with pkgs; [
+    kdePackages.kate
+    git
+    neovim
+    librewolf
+    protonup-qt
+    wineWowPackages.stable
+    winetricks
+    lutris
+    heroic
+    goverlay
+    mangohud
+    wget
+  ];
+
+  environment.sessionVariables = {
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS =
+      "/home/user/.steam/root/compatibilitytools.d";
+    FREETYPE_PROPERTIES =
+      "cff:no-stem-darkening=0 autofitter:no-stem-darkening=0";
+  };
+  programs.fish.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -266,5 +211,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
+  system.stateVersion = "25.05"; # Did you read the comment?
 }
