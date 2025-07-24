@@ -8,9 +8,13 @@
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./main-user.nix
-    ../../modules/nixos/nvidia.nix
-    ../../modules/nixos/steam.nix
+    ../../modules/nixos/display.nix
+    ../../modules/nixos/fonts.nix
     ../../modules/nixos/gaming.nix
+    ../../modules/nixos/localization.nix
+    ../../modules/nixos/nvidia.nix
+    ../../modules/nixos/sound.nix
+    ../../modules/nixos/steam.nix
     inputs.home-manager.nixosModules.home-manager
   ];
 
@@ -31,7 +35,7 @@
     ExitOnSessionEnd=yes
   '';
 
-  # swap file
+  # swap file, remove if you chose to swap on install or don't want it
   swapDevices = [{
     device = "/swapfile";
     size = 16 * 1024; # 16GB
@@ -46,23 +50,7 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
-  # Set your time zone.
-  time.timeZone = "America/Los_Angeles";
 
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
-  };
 
   # flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -73,38 +61,8 @@
     users = { "ryan" = import ./home.nix; };
   };
 
-  # Enable the X11 windowing system.
-  # You can disable this if you're only using the Wayland session.
-  services.xserver = {
-    enable = true;
-    xkb = {
-      layout = "us";
-      variant = "";
-    };
-  };
-
-  # Enable the KDE Plasma Desktop Environment.
-  services.desktopManager.plasma6.enable = true;
-  services.displayManager.sddm.enable = true;
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
-
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -129,37 +87,9 @@
     neovim
     kdePackages.kate
     librewolf
-    protonup-qt
-    wineWowPackages.stable
-    winetricks
-    lutris
-    heroic
-    goverlay
-    mangohud
     wget
   ];
 
-  fonts.packages = with pkgs; [
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-emoji
-    liberation_ttf
-    fira-code
-    fira-code-symbols
-    mplus-outline-fonts.githubRelease
-    dina-font
-    proggyfonts
-    source-code-pro
-    roboto
-    roboto-mono
-  ];
-
-  environment.sessionVariables = {
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS =
-      "/home/user/.steam/root/compatibilitytools.d";
-    FREETYPE_PROPERTIES =
-      "cff:no-stem-darkening=0 autofitter:no-stem-darkening=0";
-  };
   programs.fish.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are

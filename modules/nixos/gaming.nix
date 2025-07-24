@@ -17,4 +17,19 @@
 
   hardware.graphics.enable = true;
   hardware.cpu.intel.updateMicrocode = true;
+
+  environment.systemPackages = with pkgs; [
+    protonup-qt
+    wineWowPackages.stable
+    winetricks
+    lutris
+    heroic
+    goverlay
+    mangohud
+  ];
+
+  environment.sessionVariables = {
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS =
+      "/home/user/.steam/root/compatibilitytools.d";
+  };
 }
