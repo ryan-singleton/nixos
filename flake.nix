@@ -14,11 +14,15 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      lsfg-vk = pkgs.callPackage ./pkgs/lsfg-vk.nix { };
     in {
+      packages.${system}.default = lsfg-vk;
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
-        modules =
-          [ ./hosts/nixos/configuration.nix inputs.home-manager.nixosModules.home-manager ];
+        modules = [
+          ./hosts/nixos/configuration.nix
+          inputs.home-manager.nixosModules.home-manager
+        ];
       };
     };
 }
