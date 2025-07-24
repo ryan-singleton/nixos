@@ -1,7 +1,7 @@
 # gaming.nix
 # optimizations to make nixos like other gaming specific distros
 
-{ lib, config, pkgs, lsfg-vk, ... }:
+{ lib, config, pkgs, ... }:
 
 {
   boot.kernelPackages = pkgs.linuxPackages_zen;
@@ -26,7 +26,6 @@
     heroic
     goverlay
     mangohud
-    lsfg-vk
   ];
 
   environment.sessionVariables = {
