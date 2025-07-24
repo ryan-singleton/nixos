@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchFromGitHub, cmake, vulkan-loader, SDL2, pkg-config }:
+{ lib, stdenv, fetchFromGitHub, cmake, vulkan-loader, SDL2, pkg-config, licenses}:
 
 stdenv.mkDerivation rec {
   pname = "lsfg-vk";
