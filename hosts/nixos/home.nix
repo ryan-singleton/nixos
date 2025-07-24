@@ -20,8 +20,6 @@
   home.packages = with pkgs; [
     fish
     oh-my-fish
-    vscodium
-    nixfmt-classic
     krita
     gimp
     inkscape

@@ -8,10 +8,12 @@
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./main-user.nix
+    ../../modules/nixos/dev.nix
     ../../modules/nixos/display.nix
     ../../modules/nixos/fonts.nix
     ../../modules/nixos/gaming.nix
     ../../modules/nixos/localization.nix
+    ../../modules/nixos/network.nix
     ../../modules/nixos/nvidia.nix
     ../../modules/nixos/sound.nix
     ../../modules/nixos/steam.nix
@@ -40,17 +42,6 @@
     device = "/swapfile";
     size = 16 * 1024; # 16GB
   }];
-
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
-
 
   # flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -82,9 +73,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    direnv
-    git
-    neovim
     kdePackages.kate
     librewolf
     wget
