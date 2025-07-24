@@ -16,7 +16,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
       lsfg-vk = pkgs.callPackage ./pkgs/lsfg-vk { };
     in {
-      packages.${system}.default = lsfg-vk;
+      packages.${system}.lsfg-vk = lsfg-vk;
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
