@@ -19,18 +19,6 @@ in {
       isNormalUser = true;
       extraGroups = [ "networkmanager" "wheel" ];
       shell = pkgs.fish;
-      packages = with pkgs; [
-        fish
-        oh-my-fish
-        vscodium
-        nixfmt-classic
-        krita
-        gimp
-        inkscape
-        obs-studio
-        vlc
-        discord
-      ];
     };
   };
 }

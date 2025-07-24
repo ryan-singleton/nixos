@@ -8,22 +8,16 @@
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./main-user.nix
-    ../modules/nvidia.nix
-    inputs.home-manager.nixosModules.nixos
+    ../../modules/nixos/nvidia.nix
+    ../../modules/nixos/steam.nix
+    ../../modules/nixos/gaming.nix
+    inputs.home-manager.nixosModules.home-manager
   ];
 
   # Bootloader.
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
-  };
-  boot.kernelPackages = pkgs.linuxPackages_zen;
-  boot.kernelModules = [ "fuse" "kvm-intel" ];
-
-  boot.kernel.sysctl = {
-    "vm.swappiness" = 10;
-    "kernel.sched_schedstats" = 0;
-    "kernel.nmi_watchdog" = 0;
   };
 
   # further attempts to disable watchdog which keeps holding up restart
@@ -42,8 +36,6 @@
     device = "/swapfile";
     size = 16 * 1024; # 16GB
   }];
-
-  powerManagement.cpuFreqGovernor = "performance";
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -76,10 +68,9 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   home-manager = {
+    useGlobalPkgs = true;
     extraSpecialArgs = { inherit inputs; };
-    users = {
-      "ryan" = import ./home.nix;
-    };
+    users = { "ryan" = import ./home.nix; };
   };
 
   # Enable the X11 windowing system.
@@ -91,10 +82,6 @@
       variant = "";
     };
   };
-
-
-  hardware.graphics.enable = true;
-  hardware.cpu.intel.updateMicrocode = true;
 
   # Enable the KDE Plasma Desktop Environment.
   services.desktopManager.plasma6.enable = true;
@@ -128,12 +115,6 @@
   main-user.enable = true;
   main-user.userName = "ryan";
 
-  # Install steam
-  programs.steam.enable = true;
-  programs.gamemode.enable = true;
-  programs.gamescope.enable = true;
-  programs.steam.gamescopeSession.enable = true;
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -158,9 +139,9 @@
     wget
   ];
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     noto-fonts
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
     noto-fonts-emoji
     liberation_ttf
     fira-code
