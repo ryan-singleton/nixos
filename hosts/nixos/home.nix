@@ -23,6 +23,7 @@
     # pkgs.hello
     fish
     oh-my-fish
+    obsidian
     krita
     gimp
     inkscape
