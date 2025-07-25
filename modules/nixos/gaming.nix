@@ -7,10 +7,7 @@
   boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.kernelModules = [ "fuse" "kvm-intel" ];
 
-  boot.kernel.sysctl = {
-    "vm.swappiness" = 10;
-    "kernel.sched_schedstats" = 0;
-  };
+  boot.kernel.sysctl = { "kernel.sched_schedstats" = 0; };
 
   powerManagement.cpuFreqGovernor = "performance";
 

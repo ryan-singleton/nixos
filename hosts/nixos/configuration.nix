@@ -28,20 +28,11 @@
     efi.canTouchEfiVariables = true;
   };
 
-  # further attempts to disable watchdog which keeps holding up restart
-  boot.kernelParams = [ "nowatchdog" ];
-  boot.blacklistedKernelModules = [ "iTCO_wdt" ];
-  boot.kernel.sysctl = { "kernel.nmi_watchdog" = "0"; };
-
-  systemd.extraConfig = ''
-    DefaultTimeoutStopSec=3s
-  '';
-
   # swap file, remove if you chose to swap on install or don't want it
-  swapDevices = [{
-    device = "/swapfile";
-    size = 16 * 1024; # 16GB
-  }];
+  # swapDevices = [{
+  #   device = "/swapfile";
+  #   size = 16 * 1024; # 16GB
+  # }];
 
   # flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
