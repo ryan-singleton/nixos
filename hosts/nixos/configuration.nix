@@ -5,7 +5,7 @@
 { config, pkgs, inputs, ... }:
 
 {
-  imports = [ 
+  imports = [
     ./hardware-configuration.nix
     ./main-user.nix
     ../../modules/nixos/dev.nix
@@ -49,6 +49,7 @@
   home-manager = {
     useGlobalPkgs = true;
     extraSpecialArgs = { inherit inputs; };
+    backupFileExtension = "bk";
     users = { "ryan" = import ../../modules/home/home.nix; };
   };
 
