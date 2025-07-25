@@ -5,11 +5,12 @@
 { config, pkgs, inputs, ... }:
 
 {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
     ./hardware-configuration.nix
     ./main-user.nix
     ../../modules/nixos/dev.nix
     ../../modules/nixos/display.nix
+    ../../modules/nixos/fish.nix
     ../../modules/nixos/fonts.nix
     ../../modules/nixos/gaming.nix
     ../../modules/nixos/localization.nix
@@ -49,7 +50,8 @@
   home-manager = {
     useGlobalPkgs = true;
     extraSpecialArgs = { inherit inputs; };
-    users = { "ryan" = import ./home.nix; };
+    backupFileExtension = "bk";
+    users = { "ryan" = import ../../modules/home/home.nix; };
   };
 
   # Enable CUPS to print documents.
@@ -75,10 +77,9 @@
   environment.systemPackages = with pkgs; [
     kdePackages.kate
     librewolf
+    inputs.firefox-nightly.packages.${system}.firefox-nightly-bin
     wget
   ];
-
-  programs.fish.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
