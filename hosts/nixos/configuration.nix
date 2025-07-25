@@ -14,6 +14,7 @@
     ../../modules/nixos/fonts.nix
     ../../modules/nixos/gaming.nix
     ../../modules/nixos/localization.nix
+    ../../modules/nixos/maintenance.nix
     ../../modules/nixos/network.nix
     ../../modules/nixos/nvidia.nix
     ../../modules/nixos/sound.nix
