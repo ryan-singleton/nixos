@@ -5,7 +5,7 @@
 { config, pkgs, inputs, ... }:
 
 {
-  imports = [ # Include the results of the hardware scan.
+  imports = [ 
     ./hardware-configuration.nix
     ./main-user.nix
     ../../modules/nixos/dev.nix
@@ -49,7 +49,7 @@
   home-manager = {
     useGlobalPkgs = true;
     extraSpecialArgs = { inherit inputs; };
-    users = { "ryan" = import ./home.nix; };
+    users = { "ryan" = import ../../modules/home/home.nix; };
   };
 
   # Enable CUPS to print documents.
@@ -78,8 +78,6 @@
     inputs.firefox-nightly.packages.${system}.firefox-nightly-bin
     wget
   ];
-
-  programs.fish.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
 {
+  imports = [ ./zsh ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "ryan";
@@ -21,8 +22,6 @@
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
-    fish
-    oh-my-fish
     obsidian
     krita
     gimp
