@@ -3,7 +3,6 @@
 { lib, config, pkgs, ... }:
 
 {
-  home.packages = with pkgs; [ fish oh-my-fish ];
-
+  environment.systemPackages = with pkgs; [ fish oh-my-fish ];
   programs.fish.enable = true;
 }

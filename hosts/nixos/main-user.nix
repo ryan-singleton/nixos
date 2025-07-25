@@ -18,6 +18,7 @@ in {
     users.users.${config.main-user.userName} = {
       isNormalUser = true;
       extraGroups = [ "networkmanager" "wheel" ];
+      shell = pkgs.fish;
     };
   };
 }
