@@ -10,6 +10,7 @@
     ./main-user.nix
     ../../modules/nixos/dev.nix
     ../../modules/nixos/display.nix
+    ../../modules/nixos/fish.nix
     ../../modules/nixos/fonts.nix
     ../../modules/nixos/gaming.nix
     ../../modules/nixos/localization.nix

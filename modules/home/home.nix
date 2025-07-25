@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./fish.nix ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "ryan";
@@ -22,8 +21,6 @@
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
-    fish
-    oh-my-fish
     obsidian
     krita
     gimp
@@ -83,8 +80,6 @@
   #  /etc/profiles/per-user/ryan/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = { EDITOR = "nvim"; };
-
-  programs.fish.enable = true;
 
   programs.git = {
     enable = true;
