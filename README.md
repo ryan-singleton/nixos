@@ -27,13 +27,13 @@ Layan
 Breeze
 
 ## Plasma
-Ambient-Blue
+Materia
 
 ## Colors
-QogirDark
+Monochrome
 
 ## Window Decorations
-Qogir-dark
+Monochrome
 
 ## Fonts
 All Roboto 10pt except:

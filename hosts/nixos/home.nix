@@ -31,11 +31,11 @@
     vlc
     discord
     (writeShellScriptBin "flaketest" ''
-    sudo nixos-rebuild test --flake ~/nixos/#nixos
-  '')
+      sudo nixos-rebuild test --flake ~/nixos/#nixos
+    '')
     (writeShellScriptBin "flakeswitch" ''
-    sudo nixos-rebuild switch --flake ~/nixos/#nixos
-  '')
+      sudo nixos-rebuild switch --flake ~/nixos/#nixos
+    '')
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -81,8 +81,13 @@
   #
   #  /etc/profiles/per-user/ryan/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = {
-    EDITOR = "nvim";
+  home.sessionVariables = { EDITOR = "nvim"; };
+
+  programs.git = {
+    enable = true;
+    userName = "ryan-singleton";
+    userEmail = "ryan@northofreal.com";
+    extraConfig = { init.defaultBranch = "main"; };
   };
 
   # Let Home Manager install and manage itself.

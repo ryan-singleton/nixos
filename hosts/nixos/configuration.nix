@@ -75,6 +75,7 @@
   environment.systemPackages = with pkgs; [
     kdePackages.kate
     librewolf
+    inputs.firefox-nightly.packages.${system}.firefox-nightly-bin
     wget
   ];
 
