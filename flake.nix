@@ -13,8 +13,8 @@
       url = "github:nix-community/flake-firefox-nightly";
       inputs.nixpkgs.follows = "nixpkgs";
 
-      lsfg-vk.url = "path:./pkgs/lsfg-vk";
     };
+    lsfg-vk.url = "path:./pkgs/lsfg-vk";
   };
 
   outputs = { self, nixpkgs, lsfg-vk, ... }@inputs:
