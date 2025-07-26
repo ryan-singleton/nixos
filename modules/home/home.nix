@@ -22,7 +22,7 @@
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
-    davinci-resolve
+    kdePackages.kdenlive
     obsidian
     krita
     gimp
