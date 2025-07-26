@@ -28,14 +28,19 @@
     efi.canTouchEfiVariables = true;
   };
 
+  boot.kernel.sysctl = { "kernel.sysrq" = 1; };
+  boot.kernelParams = [ "systemd.debug-shell" "reboot-acpi" ];
+
   # eliminate hang on x11 hangup during shutdown
   systemd.extraConfig = "DefaultTimeoutStopSec=10s";
+  hardware.cpu.intel.updateMicrocode = true;
+  hardware.enableRedistributableFirmware = true;
 
   # swap file, remove if you chose to swap on install or don't want it
-  # swapDevices = [{
-  #   device = "/swapfile";
-  #   size = 16 * 1024; # 16GB
-  # }];
+  swapDevices = [{
+    device = "/swapfile";
+    size = 16 * 1024; # 16GB
+  }];
 
   # flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

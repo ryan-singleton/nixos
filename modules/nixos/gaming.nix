@@ -8,12 +8,14 @@
   boot.kernelModules = [ "fuse" "kvm-intel" ];
   boot.kernelParams = [ "split_lock_detect=off" ];
 
-  boot.kernel.sysctl = { "kernel.sched_schedstats" = 0; };
+  boot.kernel.sysctl = {
+    "kernel.sched_schedstats" = 0;
+    # "vm.swappiness" = 0;
+  };
 
   powerManagement.cpuFreqGovernor = "performance";
 
   hardware.graphics.enable = true;
-  hardware.cpu.intel.updateMicrocode = true;
 
   environment.systemPackages = with pkgs; [
     protonup-qt
