@@ -28,6 +28,9 @@
     efi.canTouchEfiVariables = true;
   };
 
+  # eliminate hang on x11 hangup during shutdown
+  systemd.extraConfig = "DefaultTimeoutStopSec=10s";
+
   # swap file, remove if you chose to swap on install or don't want it
   # swapDevices = [{
   #   device = "/swapfile";

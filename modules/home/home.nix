@@ -22,6 +22,7 @@
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
+    davinci-resolve
     obsidian
     krita
     gimp
