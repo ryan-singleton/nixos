@@ -14,6 +14,7 @@
     ../../modules/nixos/fonts.nix
     ../../modules/nixos/gaming.nix
     ../../modules/nixos/localization.nix
+    ../../modules/nixos/maintenance.nix
     ../../modules/nixos/network.nix
     ../../modules/nixos/nvidia.nix
     ../../modules/nixos/sound.nix
@@ -27,18 +28,20 @@
     efi.canTouchEfiVariables = true;
   };
 
-  # further attempts to disable watchdog which keeps holding up restart
-  boot.kernelParams = [ "nowatchdog" ];
+  # Fixes shutdown freeze (ACPI) and MHI modem reset hang (Qualcomm).
+  boot.kernelParams = [ "reboot-acpi" "mhi.timeout_ms=10000" ];
 
-  systemd.extraConfig = ''
-    DefaultTimeoutStopSec=10s
-  '';
+  # eliminate hang on x11 hangup during shutdown
+  systemd.extraConfig = "DefaultTimeoutStopSec=10s";
+  hardware.cpu.intel.updateMicrocode = true;
+  hardware.enableRedistributableFirmware = true;
 
-  systemd.user.extraConfig = ''
-    ExitOnSessionEnd=yes
-  '';
+  zramSwap = {
+    enable = true;
+    priority = 100;
+  };
 
-  # swap file, remove if you chose to swap on install or don't want it
+  # turn on if hibernation is required
   swapDevices = [{
     device = "/swapfile";
     size = 16 * 1024; # 16GB

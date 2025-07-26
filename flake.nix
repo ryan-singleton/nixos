@@ -9,13 +9,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-     firefox-nightly = {
+    firefox-nightly = {
       url = "github:nix-community/flake-firefox-nightly";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    lsfg-vk = {
+      url = "github:ryan-singleton/lsfg-vk-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, lsfg-vk, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -23,6 +27,10 @@
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
+          {
+            environment.systemPackages =
+              [ lsfg-vk.packages."${system}".default ];
+          }
           ./hosts/nixos/configuration.nix
           inputs.home-manager.nixosModules.home-manager
         ];

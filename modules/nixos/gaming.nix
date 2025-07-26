@@ -1,22 +1,21 @@
 # gaming.nix
 # optimizations to make nixos like other gaming specific distros
 
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, inputs, ... }:
 
 {
   boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.kernelModules = [ "fuse" "kvm-intel" ];
+  boot.kernelParams = [ "split_lock_detect=off" ];
 
   boot.kernel.sysctl = {
-    "vm.swappiness" = 10;
     "kernel.sched_schedstats" = 0;
-    "kernel.nmi_watchdog" = 0;
+    "vm.swappiness" = 10;
   };
 
   powerManagement.cpuFreqGovernor = "performance";
 
   hardware.graphics.enable = true;
-  hardware.cpu.intel.updateMicrocode = true;
 
   environment.systemPackages = with pkgs; [
     protonup-qt
@@ -26,6 +25,7 @@
     heroic
     goverlay
     mangohud
+    inputs.lsfg-vk.packages."${system}".default
   ];
 
   environment.sessionVariables = {
