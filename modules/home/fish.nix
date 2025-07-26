@@ -3,9 +3,9 @@
 { lib, config, pkgs, ... }:
 
 {
-  imports = [ ./fastfetch.nix ];
+  # imports = [ ./fastfetch.nix ];
 
-  environment.systemPackages = with pkgs; [ fish oh-my-fish ];
+  home.packages = with pkgs; [ fish oh-my-fish ];
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
