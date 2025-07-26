@@ -28,24 +28,13 @@
     efi.canTouchEfiVariables = true;
   };
 
-  # Fixes shutdown freeze (ACPI) and MHI modem reset hang (Qualcomm).
-  boot.kernelParams = [ "reboot-acpi" "mhi.timeout_ms=10000" ];
+  # Fixes shutdown freeze (ACPI) and MHI modem reset hang (Qualcomm) and Audio issues with polling.
+  boot.kernelParams = [ "mhi.timeout_ms=10000" "irqpoll" "reboot-acpi" ];
 
   # eliminate hang on x11 hangup during shutdown
   systemd.extraConfig = "DefaultTimeoutStopSec=10s";
   hardware.cpu.intel.updateMicrocode = true;
   hardware.enableRedistributableFirmware = true;
-
-  zramSwap = {
-    enable = true;
-    priority = 100;
-  };
-
-  # turn on if hibernation is required
-  swapDevices = [{
-    device = "/swapfile";
-    size = 16 * 1024; # 16GB
-  }];
 
   # flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

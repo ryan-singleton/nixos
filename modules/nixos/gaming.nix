@@ -4,7 +4,7 @@
 { lib, config, pkgs, inputs, ... }:
 
 {
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelPackages = pkgs.linuxPackages;
   boot.kernelModules = [ "fuse" "kvm-intel" ];
   boot.kernelParams = [ "split_lock_detect=off" ];
 
@@ -25,7 +25,6 @@
     heroic
     goverlay
     mangohud
-    inputs.lsfg-vk.packages."${system}".default
   ];
 
   environment.sessionVariables = {
