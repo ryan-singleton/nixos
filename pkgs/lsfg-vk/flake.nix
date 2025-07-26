@@ -18,9 +18,9 @@
           src = pkgs.fetchFromGitHub {
             owner = "PancakeTAS";
             repo = "lsfg-vk";
-            rev = "develop"; # Use latest develop branch
+            rev = "v0.9.0"; # Use latest develop branch
             hash =
-              "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; # You'll need to update this
+              "sha256-V2/ILhanlSSwfLz0pqGO9QCKBdTLB56a+Q3wuJMCUMA="; # You'll need to update this
             fetchSubmodules = true;
           };
 
@@ -103,12 +103,13 @@
               LSFG is primarily written in DirectX 11 compute shaders, which are
               translated to SPIR-V using DXVK. The surrounding parts have been
               rewritten in plain Vulkan code to make LSFG run natively on Linux.
+
+              Note: This requires the proprietary Lossless.dll from Steam.
             '';
             homepage = "https://github.com/PancakeTAS/lsfg-vk";
-            license = licenses.unfree; # Depends on proprietary Lossless Scaling
+            license = licenses.mit; # Depends on proprietary Lossless Scaling
             maintainers = [ ];
             platforms = platforms.linux;
-            # Note: This requires the proprietary Lossless.dll from Steam
             broken = false;
           };
         };
