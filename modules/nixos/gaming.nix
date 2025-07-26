@@ -25,7 +25,7 @@
     heroic
     goverlay
     mangohud
-    inputs.lsfg-vk.packages.x86_64-linux.default
+    inputs.lsfg-vk.packages."${system}".default
   ];
 
   environment.sessionVariables = {
