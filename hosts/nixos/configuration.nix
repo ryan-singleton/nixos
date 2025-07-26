@@ -29,7 +29,7 @@
   };
 
   # Fixes shutdown freeze (ACPI) and MHI modem reset hang (Qualcomm).
-  boot.kernelParams = [ "reboot-acpi" "mhi.timeout_ms=10000" ];
+  boot.kernelParams = [ "mhi.timeout_ms=10000" ];
 
   # eliminate hang on x11 hangup during shutdown
   systemd.extraConfig = "DefaultTimeoutStopSec=10s";
