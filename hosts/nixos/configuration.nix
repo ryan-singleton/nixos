@@ -19,6 +19,7 @@
     ../../modules/nixos/nvidia.nix
     ../../modules/nixos/sound.nix
     ../../modules/nixos/steam.nix
+    ../../modules/nixos/swap.nix
     inputs.home-manager.nixosModules.home-manager
   ];
 
@@ -28,19 +29,15 @@
     efi.canTouchEfiVariables = true;
   };
 
-  boot.kernel.sysctl = { "kernel.sysrq" = 1; };
-  boot.kernelParams = [ "systemd.debug-shell" "reboot-acpi" ];
+  # Fixes shutdown freeze (ACPI) and MHI modem reset hang (Qualcomm).
+  boot.kernelParams = [ "reboot-acpi" "mhi.timeout_ms=10000" ];
 
   # eliminate hang on x11 hangup during shutdown
   systemd.extraConfig = "DefaultTimeoutStopSec=10s";
   hardware.cpu.intel.updateMicrocode = true;
   hardware.enableRedistributableFirmware = true;
 
-  # swap file, remove if you chose to swap on install or don't want it
-  swapDevices = [{
-    device = "/swapfile";
-    size = 16 * 1024; # 16GB
-  }];
+  swap.enable = true;
 
   # flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

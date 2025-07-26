@@ -10,7 +10,7 @@
 
   boot.kernel.sysctl = {
     "kernel.sched_schedstats" = 0;
-    # "vm.swappiness" = 0;
+    "vm.swappiness" = 10;
   };
 
   powerManagement.cpuFreqGovernor = "performance";
