@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./neovim.nix ];
+  imports = [ ./fastfetch.nix ./fish.nix ./neovim.nix ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "ryan";
