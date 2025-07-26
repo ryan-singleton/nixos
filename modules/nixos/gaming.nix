@@ -6,6 +6,7 @@
 {
   boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.kernelModules = [ "fuse" "kvm-intel" ];
+  boot.kernelParams = [ "split_lock_detect=off" ];
 
   boot.kernel.sysctl = { "kernel.sched_schedstats" = 0; };
 

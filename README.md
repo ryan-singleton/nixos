@@ -55,6 +55,7 @@ Installing `protonup-qt` to get GE-Proton and Proton-CachyOS
 ```nix
   boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.kernelModules = [ "fuse" "kvm-intel" ];
+  boot.kernelParams = [ "split_lock_detect=off" ];
 
    environment.sessionVariables = {
     STEAM_EXTRA_COMPAT_TOOLS_PATHS =
