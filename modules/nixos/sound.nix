@@ -3,6 +3,9 @@
 { lib, config, pkgs, ... }:
 
 {
+  boot.extraModprobeConfig = ''
+    options snd_hda_intel enable=0
+  '';
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
