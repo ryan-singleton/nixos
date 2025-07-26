@@ -19,7 +19,6 @@
     ../../modules/nixos/nvidia.nix
     ../../modules/nixos/sound.nix
     ../../modules/nixos/steam.nix
-    ../../modules/nixos/swap.nix
     inputs.home-manager.nixosModules.home-manager
   ];
 
@@ -37,7 +36,16 @@
   hardware.cpu.intel.updateMicrocode = true;
   hardware.enableRedistributableFirmware = true;
 
-  swap.enable = true;
+  zramSwap = {
+    enable = true;
+    priority = 100;
+  };
+
+  # turn on if hibernation is required
+  # swapDevices = [{
+  #   device = "/swapfile";
+  #   size = 16 * 1024; # 16GB
+  # }];
 
   # flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
