@@ -42,10 +42,10 @@
   };
 
   # turn on if hibernation is required
-  # swapDevices = [{
-  #   device = "/swapfile";
-  #   size = 16 * 1024; # 16GB
-  # }];
+  swapDevices = [{
+    device = "/swapfile";
+    size = 16 * 1024; # 16GB
+  }];
 
   # flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
