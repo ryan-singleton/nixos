@@ -4,7 +4,7 @@
 { lib, config, pkgs, inputs, ... }:
 
 {
-  boot.kernelPackages = pkgs.linuxPackages;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.kernelModules = [ "fuse" "kvm-intel" ];
   boot.kernelParams = [ "split_lock_detect=off" ];
 
