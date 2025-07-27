@@ -29,7 +29,14 @@
   };
 
   # Fixes shutdown freeze (ACPI) and MHI modem reset hang (Qualcomm) and Audio issues with polling.
-  boot.kernelParams = [ "mhi.timeout_ms=10000" "irqpoll" "reboot-acpi" ];
+  boot.kernelParams = [
+    "mhi.timeout_ms=10000"
+    "irqpoll"
+    "reboot-acpi"
+    "nowatchdog"
+    "quiet"
+    "splash"
+  ];
 
   # eliminate hang on x11 hangup during shutdown
   systemd.extraConfig = "DefaultTimeoutStopSec=10s";
