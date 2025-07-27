@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./neovim.nix ];
+  imports = [ ./git.nix ./neovim.nix ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "ryan";
@@ -16,12 +16,7 @@
   # release notes.
   home.stateVersion = "25.05"; # Please read the comment before changing.
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
   home.packages = with pkgs; [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
     kdePackages.kdenlive
     obsidian
     krita
@@ -37,7 +32,8 @@
       sudo nixos-rebuild switch --flake ~/nixos/#nixos
     '')
     (writeShellScriptBin "flakeupgrade" ''
-      sudo nixos-rebuild switch --upgrade --flake ~/nixos/#nixos
+      cd ~/nixos
+      sudo nix flake update
     '')
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -56,10 +52,10 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
+    # Building this configuration will create a copy of 'dotfiles/screenrc' in
+    # the Nix store. Activating the configuration will then make '~/.screenrc' a
+    # symlink to the Nix store copy.
+    ".screenrc".source = dotfiles/screenrc;
 
     # # You can also set the file content immediately.
     # ".gradle/gradle.properties".text = ''
@@ -85,13 +81,6 @@
   #  /etc/profiles/per-user/ryan/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = { EDITOR = "nvim"; };
-
-  programs.git = {
-    enable = true;
-    userName = "ryan-singleton";
-    userEmail = "ryan@northofreal.com";
-    extraConfig = { init.defaultBranch = "main"; };
-  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

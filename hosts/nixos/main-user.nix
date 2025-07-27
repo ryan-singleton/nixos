@@ -1,4 +1,5 @@
 # main-user.nix
+# a bit overdone, but used as a reference for setting up options
 
 { lib, config, pkgs, ... }:
 

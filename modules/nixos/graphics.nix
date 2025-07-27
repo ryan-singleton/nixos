@@ -1,9 +1,10 @@
-# nvidia.nix
+# graphics.nix
 
 { lib, config, pkgs, ... }:
 
 {
   services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.graphics.enable = true;
 
   hardware.nvidia = {
     open = true;
