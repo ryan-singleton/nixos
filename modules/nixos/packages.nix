@@ -1,7 +1,7 @@
 # packages.nix
 # packages that should be available across the system
 
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, inputs, ... }:
 
 {
   # Install firefox.
