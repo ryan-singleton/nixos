@@ -67,6 +67,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    gparted
+    nix-search-cli
     kdePackages.kate
     librewolf
     inputs.firefox-nightly.packages.${system}.firefox-nightly-bin
