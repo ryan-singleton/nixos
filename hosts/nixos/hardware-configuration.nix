@@ -39,7 +39,7 @@
   # turn on if hibernation is required
   swapDevices = [{
     device = "/swapfile";
-    size = 16 * 1024; # 16GB
+    size = 32 * 1024; # 32GB
   }];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
