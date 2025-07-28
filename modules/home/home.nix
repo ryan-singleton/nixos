@@ -21,6 +21,7 @@
     obsidian
     krita
     gimp
+    libreoffice-qt
     inkscape
     obs-studio
     vlc
