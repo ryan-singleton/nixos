@@ -50,22 +50,10 @@ Breeze Light
 
 ## Gaming Optimizations
 
-Installing `protonup-qt` to get GE-Proton and Proton-CachyOS 
+Installs`protonup-qt` to get GE-Proton and Proton-CachyOS 
 
-```nix
-  boot.kernelPackages = pkgs.linuxPackages_zen;
-  boot.kernelModules = [ "fuse" "kvm-intel" ];
-  boot.kernelParams = [ "split_lock_detect=off" ];
+Command `lsfg-vk-ui`, set up a profile that you like for most games like `2xf`, then put steam command `LSFG_PROCESS=2xf` in the launch options for any game you want to use losseless scaling on.
 
-   environment.sessionVariables = {
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS =
-      "/home/user/.steam/root/compatibilitytools.d";
-  };
 
-  powerManagement.cpuFreqGovernor = "performance";
-
-  hardware.graphics.enable = true;
-  hardware.cpu.intel.updateMicrocode = true;
-```
 
 

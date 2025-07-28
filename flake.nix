@@ -13,9 +13,12 @@
       url = "github:nix-community/flake-firefox-nightly";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    lsfg-vk-flake.url = "github:pabloaul/lsfg-vk-flake/main";
+    lsfg-vk-flake.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, lsfg-vk-flake, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -24,6 +27,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/nixos/configuration.nix
+          lsfg-vk-flake.nixosModules.default
           inputs.home-manager.nixosModules.home-manager
         ];
       };
