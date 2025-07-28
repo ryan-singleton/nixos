@@ -1,4 +1,4 @@
-# fish.nix
+# terminals.nix
 
 { lib, config, pkgs, ... }:
 

@@ -1,4 +1,4 @@
-# display.nix
+# maintenance.nix
 
 { lib, config, pkgs, ... }:
 

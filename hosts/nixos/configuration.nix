@@ -2,6 +2,8 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
+# reference this if you get the time for ideas https://gitlab.com/Zaney/zaneyos
+
 { config, pkgs, inputs, ... }:
 
 {
@@ -10,15 +12,17 @@
     ./main-user.nix
     ../../modules/nixos/dev.nix
     ../../modules/nixos/display.nix
-    ../../modules/nixos/fish.nix
     ../../modules/nixos/fonts.nix
     ../../modules/nixos/gaming.nix
+    ../../modules/nixos/graphics.nix
     ../../modules/nixos/localization.nix
     ../../modules/nixos/maintenance.nix
     ../../modules/nixos/network.nix
-    ../../modules/nixos/nvidia.nix
+    ../../modules/nixos/packages.nix
+    ../../modules/nixos/printing.nix
     ../../modules/nixos/sound.nix
-    ../../modules/nixos/steam.nix
+    ../../modules/nixos/terminals.nix
+    ../../modules/nixos/tuning.nix
     inputs.home-manager.nixosModules.home-manager
   ];
 
@@ -28,24 +32,10 @@
     efi.canTouchEfiVariables = true;
   };
 
-  # Fixes shutdown freeze (ACPI) and MHI modem reset hang (Qualcomm) and Audio issues with polling.
-  boot.kernelParams = [
-    "mhi.timeout_ms=10000"
-    "irqpoll"
-    "reboot-acpi"
-    "nowatchdog"
-    "quiet"
-    "splash"
-  ];
-
-  # eliminate hang on x11 hangup during shutdown
-  systemd.extraConfig = "DefaultTimeoutStopSec=10s";
-  hardware.cpu.intel.updateMicrocode = true;
-  hardware.enableRedistributableFirmware = true;
-
-  # flakes
+  # Set up flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  # Set up home manager
   home-manager = {
     useGlobalPkgs = true;
     extraSpecialArgs = { inherit inputs; };
@@ -53,53 +43,12 @@
     users = { "ryan" = import ../../modules/home/home.nix; };
   };
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Install firefox.
-  programs.firefox.enable = true;
-
+  # Set up the user
   main-user.enable = true;
   main-user.userName = "ryan";
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # flatpak
-  services.flatpak.enable = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    gparted
-    nix-search-cli
-    kdePackages.kate
-    librewolf
-    inputs.firefox-nightly.packages.${system}.firefox-nightly-bin
-    wget
-  ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
