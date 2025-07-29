@@ -6,7 +6,7 @@
 { lib, config, pkgs, inputs, ... }:
 
 {
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelPackages = pkgs.linuxPackages;
   boot.kernelModules = [ "fuse" "kvm-intel" ];
   # Fixes shutdown freeze (ACPI) and MHI modem reset hang (Qualcomm) and Audio issues with polling.
   boot.kernelParams = [
