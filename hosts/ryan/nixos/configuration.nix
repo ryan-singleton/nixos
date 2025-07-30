@@ -4,12 +4,13 @@
 
 # reference this if you get the time for ideas https://gitlab.com/Zaney/zaneyos
 
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, outputs, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
     ./modules
+    outputs.nixosModules.main-user
     inputs.home-manager.nixosModules.home-manager
   ];
 
@@ -36,14 +37,6 @@
   # Set up the user
   main-user.enable = true;
   main-user.userName = "ryan";
-
-  # Set up the display
-  display = {
-    enable = true;
-    x11.enable = true;
-    desktopManager = "plasma6";
-    displayManager = "sddm";
-  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

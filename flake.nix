@@ -29,7 +29,7 @@
       homeManagerModules = import ./modules/home-manager;
 
       nixosConfigurations.ryan = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs outputs; };
         modules = [
           ./hosts/ryan/nixos/configuration.nix
           lsfg-vk-flake.nixosModules.default
