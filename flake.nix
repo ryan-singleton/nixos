@@ -20,13 +20,18 @@
 
   outputs = { self, nixpkgs, lsfg-vk-flake, ... }@inputs:
     let
+      inherit (self) outputs;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      overlays = import ./overlays { inherit inputs; };
+      nixosModules = import ./modules/nixos;
+      homeManagerModules = import ./modules/home-manager;
+
+      nixosConfigurations.ryan = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
-          ./hosts/nixos/configuration.nix
+          ./hosts/ryan/nixos/configuration.nix
           lsfg-vk-flake.nixosModules.default
           inputs.home-manager.nixosModules.home-manager
         ];

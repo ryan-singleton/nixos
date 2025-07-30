@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./git.nix ./neovim.nix ];
+  imports = [ ./modules ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "ryan";
@@ -27,10 +27,10 @@
     vlc
     discord
     (writeShellScriptBin "flaketest" ''
-      sudo nixos-rebuild test --flake ~/nixos/#nixos
+      sudo nixos-rebuild test --flake ~/nixos/#ryan
     '')
     (writeShellScriptBin "flakeswitch" ''
-      sudo nixos-rebuild switch --flake ~/nixos/#nixos
+      sudo nixos-rebuild switch --flake ~/nixos/#ryan
     '')
     (writeShellScriptBin "flakeupgrade" ''
       cd ~/nixos

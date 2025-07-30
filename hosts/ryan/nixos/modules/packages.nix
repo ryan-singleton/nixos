@@ -18,7 +18,6 @@
   environment.systemPackages = with pkgs; [
     gparted
     nix-search-cli
-    kdePackages.kate
     librewolf
     inputs.firefox-nightly.packages.${system}.firefox-nightly-bin
     wget

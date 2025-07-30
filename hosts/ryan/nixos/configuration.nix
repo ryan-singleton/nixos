@@ -9,20 +9,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./main-user.nix
-    ../../modules/nixos/dev.nix
-    ../../modules/nixos/display.nix
-    ../../modules/nixos/fonts.nix
-    ../../modules/nixos/gaming.nix
-    ../../modules/nixos/graphics.nix
-    ../../modules/nixos/localization.nix
-    ../../modules/nixos/maintenance.nix
-    ../../modules/nixos/network.nix
-    ../../modules/nixos/packages.nix
-    ../../modules/nixos/printing.nix
-    ../../modules/nixos/sound.nix
-    ../../modules/nixos/terminals.nix
-    ../../modules/nixos/tuning.nix
+    ./modules
     inputs.home-manager.nixosModules.home-manager
   ];
 
@@ -31,6 +18,8 @@
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
   };
+
+  display.enable = true;
 
   # Set up flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
