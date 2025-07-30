@@ -26,13 +26,13 @@
     obs-studio
     vlc
     discord
-    (writeShellScriptBin "flaketest" ''
+    (writeShellScriptBin "flake-test" ''
       sudo nixos-rebuild test --flake ~/nixos/#ryan
     '')
-    (writeShellScriptBin "flakeswitch" ''
+    (writeShellScriptBin "flake-switch" ''
       sudo nixos-rebuild switch --flake ~/nixos/#ryan
     '')
-    (writeShellScriptBin "flakeupgrade" ''
+    (writeShellScriptBin "flake-upgrade" ''
       cd ~/nixos
       sudo nix flake update
     '')

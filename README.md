@@ -6,17 +6,14 @@ To run this, use this command
 
 `sudo nixos-rebuild switch --flake {flake.nix folder}/#{host}`
 
-Assuming you have not changed the host and have placed this in, say
-`~/nixos`
+`host` correlates to the folder that holds the specific configurations for your host machine/user
 
-The command would be 
-`sudo nixos-rebuild switch --flake ~nixos/#nixos`
+So if you set up a host named "john" in `./hosts/john`, the command would be
+`sudo nixos-rebuild switch --flake ~nixos/#john`
 
-Because the host is `nixos` by default.
+As you can see, though, this builds against the `flake.nix` file and its location. Not the configuration.nix file in `/etc/nixos` like you'll see in starter stuff. Once you have gone to flakes, do not build against `/etc/nixos/configuraiton.nix` anymore~
 
-As you can see, though, this builds against the `flake.nix` file and its location. Not the configuration.nix file in `/etc/nixos`.
-
-After it is initially built, you can just run `flakeswitch` or `flaketest` since the aliases will be applied.
+After it is initially built, you can just run `flake-switch`, `flake-upgrade`, or `flake-test` since the aliases will be applied to the host that you set up. It will know from then forward which once is relevant.
 
 ## Themes
 
