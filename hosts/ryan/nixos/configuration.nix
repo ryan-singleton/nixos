@@ -19,8 +19,6 @@
     efi.canTouchEfiVariables = true;
   };
 
-  display.enable = true;
-
   # Set up flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -29,7 +27,7 @@
     useGlobalPkgs = true;
     extraSpecialArgs = { inherit inputs; };
     backupFileExtension = "bk";
-    users = { "ryan" = import ../../modules/home/home.nix; };
+    users = { "ryan" = import ../home-manager/home.nix; };
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -38,6 +36,14 @@
   # Set up the user
   main-user.enable = true;
   main-user.userName = "ryan";
+
+  # Set up the display
+  display = {
+    enable = true;
+    x11.enable = true;
+    desktopManager = "plasma6";
+    displayManager = "sddm";
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

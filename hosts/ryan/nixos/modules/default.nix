@@ -2,7 +2,6 @@
 # These are specifically for this host configuration.
 {
   imports = [
-    ./main-user.nix
     ./dev.nix
     ./display.nix
     ./fonts.nix
