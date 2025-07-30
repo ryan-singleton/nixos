@@ -2,8 +2,6 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-# reference this if you get the time for ideas https://gitlab.com/Zaney/zaneyos
-
 { config, pkgs, inputs, outputs, ... }:
 
 {
