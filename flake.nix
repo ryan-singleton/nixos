@@ -36,5 +36,10 @@
           inputs.home-manager.nixosModules.home-manager
         ];
       };
+
+      # nixosConfigurations.single-serv = nixpkgs.lib.nixosSystem {
+      #   specialArgs = { inherit inputs outputs; };
+      #   modules = [ ./hosts/single-serv/nixos/configuration.nix ];
+      # };
     };
 }

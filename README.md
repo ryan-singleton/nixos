@@ -15,6 +15,9 @@ As you can see, though, this builds against the `flake.nix` file and its locatio
 
 After it is initially built, you can just run `flake-switch`, `flake-upgrade`, or `flake-test` since the aliases will be applied to the host that you set up. It will know from then forward which once is relevant.
 
+## Structural Stuff
+I'm mostly following a Vimjoyer amalgamation with [this repo](https://github.com/Misterio77/nix-starter-configs). The way hosts are separated (different machine profiles) follows the Vimjoyer format because I like that a little better.
+
 ## Themes
 
 ## Global

@@ -6,6 +6,7 @@
 { lib, config, pkgs, inputs, ... }:
 
 {
+  # Sticking with stable for now, a bit of unpredictability with plasma stuff on zen (30-07-2025)
   boot.kernelPackages = pkgs.linuxPackages;
   boot.kernelModules = [ "fuse" "kvm-intel" ];
   # Fixes shutdown freeze (ACPI) and MHI modem reset hang (Qualcomm) and Audio issues with polling.
