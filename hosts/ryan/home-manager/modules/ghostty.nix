@@ -1,6 +1,6 @@
-{
+{ lib, config, pkgs, ... }: {
   # Install Ghostty
-  home.packages = with pkgs; [ ghostty ];
+  home.packages = with pkgs; [ ghostty fish fastfetch oh-my-fish ];
 
   # Create Ghostty config file
   home.file.".config/ghostty/config".text = ''
@@ -30,9 +30,10 @@
     palette = 15=#ffffff
 
     # Optional additional settings
-    font-family = JetBrains Mono
-    font-size = 12
-    cursor-style = block
+    font-family = Source Code Pro
+    font-style = semibold
+    font-size = 10
+    cursor-style = underline
     mouse-hide-while-typing = true
     window-padding-x = 10
     window-padding-y = 10
@@ -64,5 +65,12 @@
       set -g fish_color_user 25be6a
       set -g fish_color_host 08bdba
     '';
+
+    # Set Fish as default shell
+    home.sessionVariables = {
+      SHELL = "${pkgs.fish}/bin/fish";
+      # Set Ghostty as default terminal
+      TERMINAL = "${pkgs.ghostty}/bin/ghostty";
+    };
   };
 }
