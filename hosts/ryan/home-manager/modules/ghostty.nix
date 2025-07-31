@@ -65,12 +65,5 @@
       set -g fish_color_user 25be6a
       set -g fish_color_host 08bdba
     '';
-
-    # Set Fish as default shell
-    home.sessionVariables = {
-      SHELL = "${pkgs.fish}/bin/fish";
-      # Set Ghostty as default terminal
-      TERMINAL = "${pkgs.ghostty}/bin/ghostty";
-    };
   };
 }
