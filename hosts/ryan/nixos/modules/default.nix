@@ -13,7 +13,6 @@
     ./packages.nix
     ./printing.nix
     ./sound.nix
-    ./terminals.nix
     ./tuning.nix
   ];
 }

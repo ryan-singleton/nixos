@@ -64,6 +64,13 @@
       set -g fish_color_cwd 78a9ff
       set -g fish_color_user 25be6a
       set -g fish_color_host 08bdba
+
+      function fish_greeting        
+        echo ""
+      end
     '';
   };
+
+  # Environment
+  home.sessionVariables = { TERMINAL = "ghostty"; };
 }
