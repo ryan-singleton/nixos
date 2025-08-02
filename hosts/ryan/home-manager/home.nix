@@ -17,37 +17,15 @@
   home.stateVersion = "25.05"; # Please read the comment before changing.
 
   home.packages = with pkgs; [
-    kdePackages.kdenlive
     obsidian
-    krita
-    gimp3-with-plugins
-    libreoffice-qt
-    inkscape
     obs-studio
     vlc
     discord
-    (writeShellScriptBin "flake-test" ''
-      sudo nixos-rebuild test --flake ~/nixos/#ryan
-    '')
-    (writeShellScriptBin "flake-switch" ''
-      sudo nixos-rebuild switch --flake ~/nixos/#ryan
-    '')
-    (writeShellScriptBin "flake-upgrade" ''
-      cd ~/nixos
-      sudo nix flake update
-    '')
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
