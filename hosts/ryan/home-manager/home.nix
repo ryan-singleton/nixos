@@ -20,7 +20,7 @@
     kdePackages.kdenlive
     obsidian
     krita
-    gimp
+    gimp3-with-plugins
     libreoffice-qt
     inkscape
     obs-studio

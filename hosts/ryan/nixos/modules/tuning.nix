@@ -20,9 +20,6 @@
     "split_lock_detect=off"
   ];
 
-  # eliminate hang on x11 hangup during shutdown
-  systemd.extraConfig = "DefaultTimeoutStopSec=10s";
-
   hardware.cpu.intel.updateMicrocode = true;
   hardware.enableRedistributableFirmware = true;
 
