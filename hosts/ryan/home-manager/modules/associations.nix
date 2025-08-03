@@ -3,16 +3,12 @@
 { lib, config, pkgs, ... }: {
   xdg.mimeApps = {
     enable = true;
-    associations.added = {
-      "image/svg+xml" = "inkscape.desktop";
-      "image/svg+xml-compressed" = "inkscape.desktop";
-    };
+    associations.added = { "image/svg+xml" = "inkscape.desktop"; };
     defaultApplications = {
       "text/html" = "firefox.desktop";
       "x-scheme-handler/http" = "firefox.desktop";
       "x-scheme-handler/https" = "firefox.desktop";
       "image/svg+xml" = "inkscape.desktop";
-      "image/svg+xml-compressed" = "inkscape.desktop";
     };
   };
 }
