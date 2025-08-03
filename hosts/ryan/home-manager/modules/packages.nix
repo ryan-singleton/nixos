@@ -4,11 +4,7 @@
 { lib, config, pkgs, ... }: {
 
   home.packages = with pkgs; [
-    kdePackages.kdenlive
-    krita
-    gimp3-with-plugins
     libreoffice-qt
-    inkscape
     obsidian
     obs-studio
     vlc
@@ -19,5 +15,4 @@
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
   ];
-
 }
