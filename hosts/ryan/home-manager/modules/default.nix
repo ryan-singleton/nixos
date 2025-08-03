@@ -3,7 +3,7 @@
 {
   imports = [
     ./aliases.nix
-    ./browser.nix
+    ./associations.nix
     ./git.nix
     ./neovim.nix
     ./packages.nix
