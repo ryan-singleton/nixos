@@ -4,9 +4,9 @@
   imports = [
     ./aliases.nix
     ./browser.nix
-    ./design.nix
-    ./ghostty.nix
     ./git.nix
     ./neovim.nix
+    ./packages.nix
+    ./terminal.nix
   ];
 }

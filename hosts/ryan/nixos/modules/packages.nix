@@ -19,7 +19,6 @@
     gparted
     nix-search-cli
     librewolf
-    inputs.firefox-nightly.packages.${system}.firefox-nightly-bin
     wget
   ];
 
