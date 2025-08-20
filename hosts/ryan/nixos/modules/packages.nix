@@ -20,6 +20,7 @@
     librewolf
 
     # utilities
+    lxqt.pavucontrol-qt
     gparted
     nix-search-cli
     wget
