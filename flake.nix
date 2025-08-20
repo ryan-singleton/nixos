@@ -32,9 +32,12 @@
         ];
       };
 
-      # nixosConfigurations.single-serv = nixpkgs.lib.nixosSystem {
-      #   specialArgs = { inherit inputs outputs; };
-      #   modules = [ ./hosts/single-serv/nixos/configuration.nix ];
-      # };
+      nixosConfigurations.single-serv = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs outputs; };
+        modules = [
+          ./hosts/single-serv/nixos/configuration.nix
+          inputs.home-manager.nixosModules.home-manager
+        ];
+      };
     };
 }
