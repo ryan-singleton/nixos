@@ -9,6 +9,9 @@
     git
     neovim
     vscodium
+    dotnet-sdk
+    mono
+    jetbrains.rider
     nixfmt-classic
   ];
 }
