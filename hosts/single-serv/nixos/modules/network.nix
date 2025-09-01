@@ -14,7 +14,7 @@
   networking.networkmanager.enable = true;
   services.openssh.enable = true;
 
-  environment.systemPackages = with pkgs; [ xrdp ];
+  environment.systemPackages = with pkgs; [ xrdp unixtools.netstat ];
   networking.firewall.allowedTCPPorts = [ 5900 ];
 
   # Open ports in the firewall.
