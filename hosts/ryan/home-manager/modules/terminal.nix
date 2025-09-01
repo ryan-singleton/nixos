@@ -1,6 +1,6 @@
 { lib, config, pkgs, ... }: {
   # Install Ghostty
-  home.packages = with pkgs; [ ghostty fish fastfetch oh-my-fish ];
+  home.packages = with pkgs; [ ghostty fish fastfetch oh-my-fish tmux ];
 
   # Create Ghostty config file
   home.file.".config/ghostty/config".text = ''
