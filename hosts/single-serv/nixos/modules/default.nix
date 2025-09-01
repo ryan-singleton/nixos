@@ -5,7 +5,6 @@
     ./dev.nix
     ./display.nix
     ./docker.nix
-    ./gaming.nix
     ./graphics.nix
     ./localization.nix
     ./maintenance.nix
