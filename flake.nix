@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    sops-nix.url = "github:Mic92/sops-nix";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -37,6 +38,7 @@
         modules = [
           ./hosts/single-serv/nixos/configuration.nix
           inputs.home-manager.nixosModules.home-manager
+          sops-nix.nixosModules.sops
         ];
       };
     };
