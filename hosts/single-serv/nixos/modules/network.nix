@@ -15,7 +15,12 @@
   services.openssh.enable = true;
 
   environment.systemPackages = with pkgs; [ xrdp unixtools.netstat ];
-  networking.firewall.allowedTCPPorts = [ 5900 ];
+  # Firewall configuration for game servers
+  networking.firewall = {
+    allowedTCPPorts = [ 5900 18888 ] ++ (lib.range 7770 7797);
+
+    allowedUDPPorts = [ 27015 ] ++ (lib.range 7770 7797);
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
