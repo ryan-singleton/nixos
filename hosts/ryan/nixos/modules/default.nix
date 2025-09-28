@@ -4,6 +4,7 @@
   imports = [
     ./dev.nix
     ./display.nix
+    ./docker.nix
     ./fonts.nix
     ./gaming.nix
     ./graphics.nix
