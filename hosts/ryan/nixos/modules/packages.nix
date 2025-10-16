@@ -17,6 +17,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     #browsers
+    brave
     librewolf
 
     # utilities

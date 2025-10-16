@@ -13,5 +13,6 @@
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
+  boot.blacklistedKernelModules = [ "i915" ];
   environment.systemPackages = with pkgs; [ mangojuice mangohud ];
 }
