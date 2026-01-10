@@ -1,7 +1,12 @@
 # dev.nix
 # developer tools that should be system wide
 
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 {
   environment.systemPackages = with pkgs; [
@@ -12,9 +17,9 @@
     dotnet-sdk
     mono
     jetbrains.rider
-    nixfmt-classic
+    nixfmt
 
     elixir
-    elixir_ls
+    elixir-ls
   ];
 }

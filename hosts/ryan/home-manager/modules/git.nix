@@ -7,8 +7,8 @@
     enable = true;
     settings = {
       init.defaultBranch = "main";
-      userName = "ryan-singleton";
-      userEmail = "ryan@northofreal.com";
+      user.name = "ryan-singleton";
+      user.email = "ryan@northofreal.com";
     };
   };
 }
