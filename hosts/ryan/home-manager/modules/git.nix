@@ -5,8 +5,10 @@
 {
   programs.git = {
     enable = true;
-    userName = "ryan-singleton";
-    userEmail = "ryan@northofreal.com";
-    extraConfig = { init.defaultBranch = "main"; };
+    settings = {
+      init.defaultBranch = "main";
+      userName = "ryan-singleton";
+      userEmail = "ryan@northofreal.com";
+    };
   };
 }
