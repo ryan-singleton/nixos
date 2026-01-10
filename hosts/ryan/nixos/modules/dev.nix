@@ -13,5 +13,8 @@
     mono
     jetbrains.rider
     nixfmt-classic
+
+    elixir
+    elixir_ls
   ];
 }
