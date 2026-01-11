@@ -9,6 +9,7 @@
 }:
 
 {
+  programs.nix-ld.enable = true;
   environment.systemPackages = with pkgs; [
     direnv
     git
@@ -18,8 +19,8 @@
     mono
     jetbrains.rider
     nixfmt
-
-    elixir
-    elixir-ls
   ];
+
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
 }

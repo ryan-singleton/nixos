@@ -13,12 +13,19 @@
     lsfg-vk-flake.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, lsfg-vk-flake, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      lsfg-vk-flake,
+      ...
+    }@inputs:
     let
       inherit (self) outputs;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-    in {
+    in
+    {
       overlays = import ./overlays { inherit inputs; };
       nixosModules = import ./modules/nixos;
       homeManagerModules = import ./modules/home-manager;
