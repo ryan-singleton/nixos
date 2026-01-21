@@ -1,7 +1,13 @@
 # packages.nix
 # packages that should be available across the system
 
-{ lib, config, pkgs, inputs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   # Install firefox.
@@ -25,6 +31,7 @@
     gparted
     nix-search-cli
     wget
+    scribus
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

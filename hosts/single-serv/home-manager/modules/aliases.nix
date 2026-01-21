@@ -1,6 +1,10 @@
-
-
-{ lib, config, pkgs, ... }: {
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+{
 
   home.packages = with pkgs; [
     (writeShellScriptBin "flake-test" ''
@@ -12,6 +16,9 @@
     (writeShellScriptBin "flake-upgrade" ''
       cd ~/nixos
       sudo nix flake update
+    '')
+    (writeShellScriptBin "serverdir" ''
+      cd ~/Dev/Repos/northofreal-servers
     '')
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your

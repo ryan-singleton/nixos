@@ -2,12 +2,12 @@
 # developer tools that should be system wide
 
 {
+  inputs,
   lib,
   config,
   pkgs,
   ...
 }:
-
 {
   programs.nix-ld.enable = true;
   environment.systemPackages = with pkgs; [

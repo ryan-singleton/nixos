@@ -23,7 +23,13 @@
     let
       inherit (self) outputs;
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = builtins.attrValues outputs.overlays;
+        config = {
+          allowUnfree = true;
+        };
+      };
     in
     {
       overlays = import ./overlays { inherit inputs; };
@@ -36,6 +42,9 @@
           ./hosts/ryan/nixos/configuration.nix
           lsfg-vk-flake.nixosModules.default
           inputs.home-manager.nixosModules.home-manager
+
+          { nixpkgs.overlays = builtins.attrValues outputs.overlays; }
+          { nixpkgs.config.allowUnfree = true; }
         ];
       };
 
