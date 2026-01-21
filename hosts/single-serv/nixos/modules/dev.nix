@@ -1,7 +1,12 @@
 # dev.nix
 # developer tools that should be system wide
 
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 {
   environment.systemPackages = with pkgs; [
@@ -9,6 +14,6 @@
     git
     neovim
     vscodium
-    nixfmt-classic
+    nixfmt
   ];
 }

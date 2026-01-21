@@ -1,12 +1,19 @@
 # git.nix
 
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 {
   programs.git = {
     enable = true;
-    userName = "ryan-singleton";
-    userEmail = "ryan@northofreal.com";
-    extraConfig = { init.defaultBranch = "main"; };
+    settings = {
+      init.defaultBranch = "main";
+      user.name = "ryan-singleton";
+      user.email = "ryan@northofreal.com";
+    };
   };
 }
