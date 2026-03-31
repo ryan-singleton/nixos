@@ -1,5 +1,11 @@
 # nvim.nix
-{ lib, config, pkgs, ... }: {
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+{
   programs.neovim = {
     enable = true;
     withNodeJs = true;
@@ -13,7 +19,11 @@
       neoformat
       nerdtree
     ];
-    extraPackages = with pkgs; [ xclip xsel wl-clipboard ];
+    extraPackages = with pkgs; [
+      xclip
+      xsel
+      wl-clipboard
+    ];
     extraConfig = ''
       colorscheme carbonfox
       syntax on
@@ -37,7 +47,7 @@
         autocmd BufWritePre * undojoin | Neoformat
       augroup END
     '';
-    extraLuaConfig = ''
+    initLua = ''
        require('lualine').setup {
          options = {
          theme = 'carbonfox',
@@ -46,5 +56,7 @@
     '';
   };
 
-  home.sessionVariables = { EDITOR = "nvim"; };
+  home.sessionVariables = {
+    EDITOR = "nvim";
+  };
 }

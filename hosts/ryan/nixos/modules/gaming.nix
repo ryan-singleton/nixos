@@ -1,11 +1,17 @@
 # gaming.nix
 
-{ lib, config, pkgs, inputs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   environment.systemPackages = with pkgs; [
     protonup-qt
-    wineWowPackages.stable
+    wineWow64Packages.stable
     winetricks
     lutris
     heroic
@@ -17,8 +23,7 @@
   };
 
   environment.sessionVariables = {
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS =
-      "/home/user/.steam/root/compatibilitytools.d";
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "/home/user/.steam/root/compatibilitytools.d";
   };
 
   programs.steam.enable = true;
