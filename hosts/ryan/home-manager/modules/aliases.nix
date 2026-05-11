@@ -13,6 +13,9 @@
     (writeShellScriptBin "flake-switch" ''
       sudo nixos-rebuild switch --flake ~/nixos/#ryan
     '')
+    (writeShellScriptBin "flake-boot" ''
+      sudo nixos-rebuild boot --flake ~/nixos/#ryan
+    '')
     (writeShellScriptBin "flake-upgrade" ''
       cd ~/nixos
       sudo nix flake update
