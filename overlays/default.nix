@@ -11,6 +11,13 @@
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
+    rider = prev.rider.overrideAttrs (old: {
+      autoPatchelfIgnoreMissingDeps = true;
+      dontAutoPatchelf = false;
+      preFixup = (old.preFixup or "") + ''
+        autoPatchelfIgnoreMissingDeps=true
+      '';
+    });
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will

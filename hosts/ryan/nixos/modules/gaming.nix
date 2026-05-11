@@ -14,7 +14,8 @@
     protontricks
     wineWow64Packages.stable
     winetricks
-    lutris
+    # busted due to openldap, not using anyway
+    # lutris
     heroic
   ];
 
