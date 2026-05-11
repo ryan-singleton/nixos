@@ -10,6 +10,7 @@
     enable = true;
     withNodeJs = true;
     withPython3 = true;
+    withRuby = true;
     plugins = with pkgs.vimPlugins; [
       dracula-vim
       rose-pine

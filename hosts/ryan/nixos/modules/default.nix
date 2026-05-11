@@ -15,5 +15,6 @@
     ./printing.nix
     ./sound.nix
     ./tuning.nix
+    ./workarounds.nix
   ];
 }
