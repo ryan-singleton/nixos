@@ -23,9 +23,11 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     #browsers
-    librewolf
     tor-browser
-    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default
+    # no trusted committer right now, can't use it
+    # if you need it, just run `add-librewolf` alias and run it.
+    # librewolf
 
     # utilities
     lxqt.pavucontrol-qt
