@@ -25,6 +25,7 @@
     #browsers
     librewolf
     tor-browser
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # utilities
     lxqt.pavucontrol-qt
