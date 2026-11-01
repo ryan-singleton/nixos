@@ -20,7 +20,7 @@
   ];
   # Fixes shutdown freeze (ACPI) and MHI modem reset hang (Qualcomm) and Audio issues with polling.
   boot.kernelParams = [
-    "irqpoll"
+    # "irqpoll"
     "mhi.timeout_ms=10000"
     "nowatchdog"
     "quiet"
